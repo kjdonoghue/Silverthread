@@ -1,0 +1,10 @@
+.addProductModal {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.productsContainer {
+  display: flex;
+  flex-direction: column;
+}
