@@ -2,7 +2,6 @@
 
 const addToMaterialsByProductNumber = (id, materials) => {
 
-    //build materials object
     let addMaterials = materials.map(item => {
         return {
             product_id: parseInt(id),
@@ -14,7 +13,7 @@ const addToMaterialsByProductNumber = (id, materials) => {
             material_cost: (item.unit_price)
         }
     })
-    //add all to material by product number table
+   
     models.MaterialByProdNums.bulkCreate(addMaterials, { returning: false })
         .then((savedAddMaterials) => {
             console.log('saved material by product')
@@ -66,7 +65,6 @@ const calculateLaborCost = (labor) => {
     } else {
         return laborCost
     }
-
 }
 
 const calculateWholesaleCosts = (labor, materialList) => {
@@ -77,7 +75,11 @@ const calculateWholesaleCosts = (labor, materialList) => {
 
         //get list of extended costs
         let materialPriceList = materialList.map(item => {
-            return (item.unit_price * item.material_unit_amount)
+            if (item.unit_price) {
+                return (item.unit_price * item.material_unit_amount)
+            } else if (item.material_cost) {
+                return (item.material_cost * item.material_unit_amount)
+            }
         })
 
         //add all material costs together
@@ -93,38 +95,9 @@ const calculateWholesaleCosts = (labor, materialList) => {
 
     } else {
         let laborMarkup = (laborCost * 1.1).toFixed(2)
-        return laborMarkup     
-    }
-
-}
-
-
-const updateWholesaleCost = (labor, materialList) => {
-
-    let laborCost = calculateLaborCost(labor)
-
-    if (materialList.length >= 1) {
-
-        //get list of extended costs & add together
-        let materialPriceList = materialList.map(item => {
-            return (item.material_cost * item.material_unit_amount)
-        })
-
-        let totalMaterialCost = materialPriceList.reduce((total, amount) => total + amount)
-
-        //double material costs for pricing & add to labor
-        let costs = ((totalMaterialCost * 2) + laborCost)
-
-        //markup by 10% for utilities - rounded to .00
-        let totalWholesaleCosts = (costs * 1.1).toFixed(2)
-
-        return totalWholesaleCosts
-
-    } else {
-        let laborMarkup = (laborCost * 1.1).toFixed(2)
         return laborMarkup
     }
+
 }
 
-
-module.exports = { addToMaterialsByProductNumber, calculateWholesaleCosts, updateWholesaleCost, deleteMaterialByProductNum, deleteMaterialFromProducts }  
+module.exports = { addToMaterialsByProductNumber, calculateWholesaleCosts, deleteMaterialByProductNum, deleteMaterialFromProducts }  

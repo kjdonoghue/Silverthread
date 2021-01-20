@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 //const models = require("../models");
-const functions = require('../functions/functions')
+const functions = require('../functions/productFunctions')
 
 router.get("/products", (req, res) => {
   models.Product.findAll().then((products) => {
@@ -70,11 +70,11 @@ router.patch('/update-wholesale', async (req, res) => {
   const product_name = req.body.product_name
   const product_num = req.body.product_num
   const retail_price = req.body.retail_price
-  const quantity = req.body.quantity
+  const quantity = req.body.quantity  
   const category = req.body.category
   const quantity_painted_tree = req.body.quantity_painted_tree
 
- const wholesale = await functions.updateWholesaleCost(labor, materialList)
+  const wholesale = await functions.calculateWholesaleCosts(labor, materialList)
 
   await models.Product.update({
     product_name: product_name,

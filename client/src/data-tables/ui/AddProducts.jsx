@@ -31,11 +31,12 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const AddProducts = ({ onGetMaterials, materials, newReturnedProduct, onAddProduct, onAddRetail, }) => {
+const AddProducts = ({ onGetMaterials, materials, newReturnedProduct, onAddProduct, onAddRetail, productData,}) => {
 
     const classes = useStyles();
     const [activeStep, setActiveStep] = React.useState(0);
-    const [newProduct, setNewProduct] = useState({ 'product_name': '', 'product_num': '', 'category': '', 'labor': '' })
+    // const [newProduct, setNewProduct] = useState({ 'product_name': '', 'product_num': '', 'category': '', 'labor': '' })
+    const [newProduct, setNewProduct] = useState([productData])
     const [returnedProduct, setReturnedProduct] = useState({})
     const [materialToAdd, setMaterialToAdd] = useState({ 'material_unit_amount': '' })
     const [addedMaterialsList, setAddedMaterialsList] = useState([])

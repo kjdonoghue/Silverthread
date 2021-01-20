@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 //const models = require("../models");
-const functions = require('../functions/functions')
+const functions = require('../functions/productFunctions')
 
 router.get("/materials", (req, res) => {
     models.Material.findAll().then((materials) => {

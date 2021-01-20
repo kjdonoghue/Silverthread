@@ -1,6 +1,5 @@
 const express = require("express")
 const router = express.Router()
-//const models = require("../models")
 
 router.post('/add-material', (req, res) => {   
    let product_id = req.body.product_id
@@ -16,7 +15,6 @@ router.post('/add-material', (req, res) => {
       material_name: material_name,
       material_unit_amount: material_unit_amount,
       material_cost: material_cost
-
    })
    material.save().then((savedMaterial) => {
       res.status(200).json(savedMaterial);

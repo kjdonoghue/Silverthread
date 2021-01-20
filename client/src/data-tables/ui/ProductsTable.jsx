@@ -12,6 +12,7 @@ import AddProducts from './AddProducts'
 import CopyProduct from './CopyProduct'
 import { GetProducts } from '../use-cases/getProducts'
 import { DeleteProduct } from '../use-cases/deleteProduct'
+import { GetProductByID } from '../use-cases/getProductByID'
 import { exportCsv} from '../use-cases/excelProductsReports'
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -46,6 +47,23 @@ const AddProductModal = ({ closeModal }) => {
     )
 }
 
+const CopyProductModal = ({onGetProductByID, closeCopyModal, rowData, }) => {
+    let id = rowData.id
+
+    // onGetProductByID(id)
+
+    return (
+        <div className="addProductModal">
+            <div className='closeIconButton'>
+                <IconButton variant="contained" onClick={() => closeCopyModal()}><HighlightOffIcon /></IconButton>
+            </div>
+            <h2>Duplicate</h2>
+            <CopyProduct productData={rowData} closeCopyModal={closeCopyModal}/>
+            {/* <AddProducts productData={rowData}/> */}
+        </div>
+    )
+}
+
 const EditProductModal = ({ closeEditModal, rowData }) => {
     return (
         <div className="addProductModal">
@@ -56,18 +74,6 @@ const EditProductModal = ({ closeEditModal, rowData }) => {
         </div>
     )
 }
-
-const CopyProductModal = ({ closeCopyModal, rowData }) => {
-    return (
-        <div className="addProductModal">
-            <div className='closeIconButton'>
-                <IconButton variant="contained" onClick={() => closeCopyModal()}><HighlightOffIcon /></IconButton>
-            </div>
-            <CopyProduct productData={rowData} closeCopyModal={closeCopyModal}/>
-        </div>
-    )
-}
-
 
 const ProductsTable = ({ onGetProducts, products, onDeleteProduct, productDelete, productAdd, productEdit }) => {
 
@@ -208,8 +214,7 @@ const ProductsTable = ({ onGetProducts, products, onDeleteProduct, productDelete
                             icon: 'library_add',
                             tooltip: 'Duplicate Product',
                             onClick: (event, rowData) => {                        
-                                setRowData(rowData)
-                                // setOpenEdit(true)
+                                setRowData(rowData)                                
                                 setOpenCopy(true)                                   
                             }
                         }
@@ -241,7 +246,8 @@ const mapStateToProps = (state, { }) => ({
 
 const mapDispatchToProps = (dispatch) => ({
     onGetProducts: GetProducts(dispatch),
-    onDeleteProduct: DeleteProduct(dispatch)
+    onDeleteProduct: DeleteProduct(dispatch),
+    onGetProductByID: GetProductByID(dispatch),
 
 })
 
