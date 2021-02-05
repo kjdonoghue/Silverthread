@@ -56,8 +56,7 @@ const CopyProductModal = ({onGetProductByID, closeCopyModal, rowData, }) => {
         <div className="addProductModal">
             <div className='closeIconButton'>
                 <IconButton variant="contained" onClick={() => closeCopyModal()}><HighlightOffIcon /></IconButton>
-            </div>
-            <h2>Duplicate</h2>
+            </div>            
             <CopyProduct productData={rowData} closeCopyModal={closeCopyModal}/>
             {/* <AddProducts productData={rowData}/> */}
         </div>
